@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <label>Id:</label>
+        <input id="id" />
+        <label>Type:</label>
+        <input id="type" />
+        <button onclick="addTheDuck()">Add the duck</button>
+    </div>
+<script>
+    async function addTheDuck() {
+        try {
+            await add();
+        }
+        catch {
+            alert("Something went wrong!");
+        }
+    }
+    async function add() {
+          let id = document.getElementById("id").value;
+          let type = document.getElementById("type").value;
+          let host = "http://localhost:8080";
+          let endpoint = host + "/ducks";
+          let duck = {id, type};
+          let request = {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(duck)
+          };
+          let response = await fetch(endpoint, request);
+          let result = await response.json();
+          if(result) {
+            alert("The duck data added successfully!");
+          } else {
+            alert("Something went wrong!");
+          }
+    }
+</script>    
+</body>
+</html>
