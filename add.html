@@ -11,18 +11,28 @@
         <input id="id" />
         <label>Type:</label>
         <input id="type" />
+        <br />
+        <input type="file" id="imageInput" name="Choose the image"/>
         <button onclick="addTheDuck()">Add the duck</button>
     </div>
 <script>
     async function addTheDuck() {
         try {
-            await add();
+             let result = await addTheData();
+             if(result) {
+            alert("The duck data was added successfully! The image will be uploaded now!");
+            addTheImage();
+          } else {
+            alert("Something went wrong!");
+          }
+             
         }
-        catch {
+        catch(error) {
+            console.error(error);
             alert("Something went wrong!");
         }
     }
-    async function add() {
+    async function addTheData() {
           let id = document.getElementById("id").value;
           let type = document.getElementById("type").value;
           let host = "http://localhost:8080";
@@ -38,8 +48,24 @@
           };
           let response = await fetch(endpoint, request);
           let result = await response.json();
+          return result;
+    }
+
+    async function addTheImage() {
+          let imageInput = document.getElementById("imageInput");
+          let id = document.getElementById("id").value;
+          let host = "http://localhost:8080";
+          let endpoint = host + "/ducks/" + id + "/image";
+          let formdata = new FormData();
+          formdata.append("file", imageInput.files[0])
+          let request = {
+            method: "POST",            
+            body: formdata
+          };
+          let response = await fetch(endpoint, request);
+          let result = await response.json();
           if(result) {
-            alert("The duck data added successfully!");
+            alert("The duck image was added successfully!");
           } else {
             alert("Something went wrong!");
           }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .flex-container {
+        display: flex;
+      }
+
+      .duckDiv {
+         display: flex;
+         flex-direction: column;
+         border: 1px solid;
+         padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="setUpThePond()">Set up the pond!</button>
+    
+    <div
+      id="pond"
+      class="flex-container"></div>
+
+    <script>
+      async function setUpThePond() {
+        let host = "http://localhost:8080";
+        let response = await fetch(host + "/ducks");
+        let ducks = await response.json();
+        for (let duck of ducks) {
+          displayTheDuck(duck);
+        }
+      }
+
+      function displayTheDuck(duck) {
+        let div = document.createElement("div");
+        div.className = "duckDiv";        
+        let id = document.createElement("label");
+        id.appendChild(document.createTextNode(duck.id));
+        let type = document.createElement("label");
+        type.appendChild(document.createTextNode(duck.type));
+        div.appendChild(id);
+        div.appendChild(type);
+        document.getElementById("pond").appendChild(div);
+      }
+    </script>
+  </body>
+</html>
