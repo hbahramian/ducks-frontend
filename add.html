@@ -13,36 +13,20 @@
         <input id="type" />
         <button onclick="addTheDuck()">Add the duck</button>
     </div>
-<script>
-    async function addTheDuck() {
-        try {
-            await add();
-        }
-        catch {
-            alert("Something went wrong!");
-        }
-    }
-    async function add() {
-          let id = document.getElementById("id").value;
-          let type = document.getElementById("type").value;
-          let host = "http://localhost:8080";
-          let endpoint = host + "/ducks";
-          let duck = {id, type};
-          let request = {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(duck)
-          };
-          let response = await fetch(endpoint, request);
-          let result = await response.json();
-          if(result) {
-            alert("The duck data added successfully!");
-          } else {
-            alert("Something went wrong!");
-          }
+<script>   
+    function addTheDuck() {
+          let duckId = document.getElementById("id").value;
+          let duckType = document.getElementById("type").value;
+          
+          //alert("You entered: id=" + duckId + " ,type=" + duckType);
+          //let duck = {x: duckId, y: duckType};
+          //alert("You entered: id=" + duck.x + " ,type=" + duck.y);
+
+          let duck = {id: duckId, type: duckType};
+          //alert("You entered: id=" + duck.id + " ,type=" + duck.type);
+
+          alert("You entered:" + JSON.stringify(duck));
+
     }
 </script>    
 </body>

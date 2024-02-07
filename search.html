@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search ducks</title>
+    <style>
+      table {
+        border: 1px solid;
+        border-collapse: collapse;
+        margin: 30px;
+      }
+
+      table td {
+        border-left: 1px solid #000;
+        border-right: 1px solid #000;
+      }
+
+      table td:first-child {
+        border-left: none;
+      }
+
+      table td:last-child {
+        border-right: none;
+      }
+    </style>
+  </head>
+  <body>
+    <labe>Type:</labe>
+    <input id="type" />
+    <button onclick="search()">Search</button>
+    <br />
+    <table>
+      <tr>
+        <th>Id</th>
+        <th>Type</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Mallard</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Redhead</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Decoy Duck</td>
+      </tr>
+    </table>
+
+    <script>
+      let ducks = [
+        { id: 1, type: "Mallard" },
+        { id: 2, type: "Redhead" },
+        { id: 3, type: "Decoy" },
+      ];
+      function search() {
+        let duckType = document.getElementById("type").value;
+      }
+    </script>
+  </body>
+</html>
