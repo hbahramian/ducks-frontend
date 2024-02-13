@@ -45,12 +45,24 @@
     </table>
 
     <script>
-      let ducks = [
-        { id: 1, type: "Mallard" },
-        { id: 2, type: "Redhead" },
-        { id: 3, type: "Decoy" },
-      ];
-      function search() {
+      let ducks = [];
+      
+      async function getAll() {
+        let host = "http://localhost:8080";
+        return fetch(host + "/ducks")
+        .then(response => response.json())
+        .catch(error => {
+          console.log(error);
+          alert("Something went wrong!");
+          return [];
+        });        
+      }
+
+      async function search() {
+           if(ducks.length == 0) {
+            ducks = await getAll();
+           }
+
         let duckType = document.getElementById("type").value;
 
         let table = document.getElementById("result");
