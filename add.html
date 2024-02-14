@@ -21,15 +21,8 @@
               let message = "";
                 let duckId = document.getElementById("id").value;
                 let duckType = document.getElementById("type").value;
-
-                //alert("You entered: id=" + duckId + " ,type=" + duckType);
-                //let duck = {x: duckId, y: duckType};
-                //alert("You entered: id=" + duck.x + " ,type=" + duck.y);
-
                 let duck = {id: duckId, type: duckType};
-                //alert("You entered: id=" + duck.id + " ,type=" + duck.type);
-
-                alert("You entered:" + JSON.stringify(duck));
+                console.log("You entered:" + JSON.stringify(duck));
 
                 let request = {
                   method: "POST",
@@ -65,7 +58,6 @@
                 let response = await fetch(host + "/ducks/" + duckId + "/image", request);
                 let result = await response.json();
                 return result;
-
           }
     </script>
   </body>
