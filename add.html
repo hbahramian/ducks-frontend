@@ -14,7 +14,7 @@
         <button onclick="addTheDuck()">Add the duck</button>
     </div>
 <script>   
-    function addTheDuck() {
+    async function addTheDuck() {
           let duckId = document.getElementById("id").value;
           let duckType = document.getElementById("type").value;
           
@@ -26,6 +26,23 @@
           //alert("You entered: id=" + duck.id + " ,type=" + duck.type);
 
           alert("You entered:" + JSON.stringify(duck));
+          let host = "http://localhost:8080"; 
+          let request = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(duck)
+          }
+          console.log("before fetch");
+          let response = await fetch(host + "/ducks", request);
+          let result = await response.json();
+          console.log("after fetch x is ", result);
+
+          let ducksResponse = await fetch(host + "/ducks");
+          let ducks = await ducksResponse.json();
+          console.log(ducks);
+
 
     }
 </script>    
