@@ -27,7 +27,6 @@
 
       .flip-card-front,
       .flip-card-back {
-       
         width: 100%;
         height: 100%;
         -webkit-backface-visibility: hidden;
@@ -47,53 +46,55 @@
     </style>
   </head>
   <body>
-    <div class="flip-card">
-      <div class="flip-card-inner">
-        <div class="flip-card-front">
-          <img
-            src="http://localhost:8080/ducks/1/image"
-            alt="Duck"
-            style="width: 100%"
-          />
-        </div>
-        <div class="flip-card-back">
-          <h1>1</h1>
-          <p>Mallard</p>
-        </div>
-      </div>
+    <div id="pond">
+
+     
+
     </div>
+    
 
-    <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img
-              src="http://localhost:8080/ducks/5/image"
-              alt="Duck"
-              style="width: 100%"
-            />
-          </div>
-          <div class="flip-card-back">
-            <h1>5</h1>
-            <p>Mallard</p>
-          </div>
-        </div>
-      </div>
+    <script>
+       let host = "https://ducks-service.onrender.com";
+      let ducks = [];
+      displayTheDucks();
 
-      <div class="flip-card">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <img
-              src="http://localhost:8080/ducks/4/image"
-              alt="Duck"
-              style="width: 100%"
-            />
-          </div>
-          <div class="flip-card-back">
-            <h1>4</h1>
-            <p>Redhead</p>
-          </div>
-        </div>
-      </div>
+      async function getAll() {
+       
+        let response = await fetch(host + "/ducks");
+        let result = await response.json();
+        return result;
+      }
 
+      async function displayTheDucks() {
+        if (ducks.length == 0) {
+          ducks = await getAll();
+        }
+
+        let pond = document.getElementById("pond");
+        pond.innerHTML = "";
+
+        for (let duck of ducks) {
+          let div = document.createElement("div");
+          div.className = "flip-card";
+          let innerHtml = `
+            <div class="flip-card-inner">
+              <div class="flip-card-front">
+               <img
+                   src="${host}/ducks/${duck.id}/image"
+                   alt="Duck"
+                   style="width: 100%"
+                />
+              </div>
+              <div class="flip-card-back">
+                <h1>${duck.id}</h1>
+                <p>${duck.type}</p>
+               </div>
+            </div>
+            `;
+          div.innerHTML = innerHtml;  
+          pond.appendChild(div);
+        }
+      }
+    </script>
   </body>
 </html>
