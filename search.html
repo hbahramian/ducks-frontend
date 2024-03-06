@@ -27,47 +27,50 @@
     </style>
   </head>
   <body>
+    <nav>
+      <a href="index.html">Home</a> |
+      <a href="add.html">Add ducks</a> |
+      <a href="search.html">Search ducks</a> |
+      <a href="pond.html">Pond</a>        
+  </nav>
     <labe>Type:</labe>
     <input id="type" />
     <button onclick="search()">Search</button>
     <br />
     <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Type</th>
-              </tr>
-        </thead>
-        <tbody id="result">
-
-        </tbody>
-     
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody id="result"></tbody>
     </table>
 
     <script>
       let ducks = [];
-      
+
       async function getAll() {
         let host = "http://localhost:8080";
         return fetch(host + "/ducks")
-        .then(response => response.json())
-        .catch(error => {
-          console.log(error);
-          alert("Something went wrong!");
-          return [];
-        });        
+          .then((response) => response.json())
+          .catch((error) => {
+            console.log(error);
+            alert("Something went wrong!");
+            return [];
+          });
       }
 
       async function search() {
-           if(ducks.length == 0) {
-            ducks = await getAll();
-           }
+        if (ducks.length == 0) {
+          ducks = await getAll();
+        }
 
         let duckType = document.getElementById("type").value;
 
         let table = document.getElementById("result");
         table.innerHTML = "";
-        
+
         for (let duck of ducks) {
           if (!duckType || duck.type.toLowerCase() == duckType.toLowerCase()) {
             let row = document.createElement("tr");

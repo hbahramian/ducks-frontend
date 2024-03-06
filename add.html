@@ -6,6 +6,12 @@
     <title>Document</title>
   </head>
   <body>
+    <nav>
+      <a href="index.html">Home</a> |
+      <a href="add.html">Add ducks</a> |
+      <a href="search.html">Search ducks</a> |
+      <a href="pond.html">Pond</a>        
+  </nav>
     <div>
       <label>Name:</label>
       <input id="name" />
@@ -29,7 +35,7 @@
                 let duck = {name: duckName, type: duckType};
                 //alert("You entered: id=" + duck.id + " ,type=" + duck.type);
 
-                alert("You entered:" + JSON.stringify(duck));
+                console.log("You entered:" + JSON.stringify(duck));
 
                 let request = {
                   method: "POST",
@@ -51,7 +57,7 @@
                   console.log(response);
                   message = "Something went wrong! Duck data could not be saved.";
                 }
-                alert(message);
+                console.log(message);
           }
 
           async function submitTheImage(duckId) {               
