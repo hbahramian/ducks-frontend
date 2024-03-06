@@ -11,7 +11,8 @@
         margin: 30px;
       }
 
-      table td {
+      table td,
+      th {
         border-left: 1px solid #000;
         border-right: 1px solid #000;
       }
@@ -26,37 +27,64 @@
     </style>
   </head>
   <body>
+    <nav>
+      <a href="index.html">Home</a> |
+      <a href="add.html">Add ducks</a> |
+      <a href="search.html">Search ducks</a> |
+      <a href="pond.html">Pond</a>        
+  </nav>
     <labe>Type:</labe>
     <input id="type" />
     <button onclick="search()">Search</button>
     <br />
     <table>
-      <tr>
-        <th>Id</th>
-        <th>Type</th>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Mallard</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Redhead</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>Decoy Duck</td>
-      </tr>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody id="result"></tbody>
     </table>
 
     <script>
-      let ducks = [
-        { id: 1, type: "Mallard" },
-        { id: 2, type: "Redhead" },
-        { id: 3, type: "Decoy" },
-      ];
-      function search() {
+      let ducks = [];
+
+      async function getAll() {
+        let host = "http://localhost:8080";
+        return fetch(host + "/ducks")
+          .then((response) => response.json())
+          .catch((error) => {
+            console.log(error);
+            alert("Something went wrong!");
+            return [];
+          });
+      }
+
+      async function search() {
+        if (ducks.length == 0) {
+          ducks = await getAll();
+        }
+
         let duckType = document.getElementById("type").value;
+
+        let table = document.getElementById("result");
+        table.innerHTML = "";
+
+        for (let duck of ducks) {
+          if (!duckType || duck.type.toLowerCase() == duckType.toLowerCase()) {
+            let row = document.createElement("tr");
+            let cell1 = document.createElement("td");
+            let id = document.createTextNode(duck.id);
+            cell1.appendChild(id);
+            row.appendChild(cell1);
+            let cell2 = document.createElement("td");
+            let type = document.createTextNode(duck.type);
+            cell2.appendChild(type);
+            row.appendChild(cell2);
+            table.appendChild(row);
+          }
+        }
       }
     </script>
   </body>
