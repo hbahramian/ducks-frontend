@@ -7,8 +7,8 @@
   </head>
   <body>
     <div>
-      <label>Id:</label>
-      <input id="id" />
+      <label>Name:</label>
+      <input id="name" />
       <label>Type:</label>
       <input id="type" />
       <label>Image:</label>
@@ -16,17 +16,17 @@
       <button onclick="addTheDuck()">Add the duck</button>
     </div>
     <script>
-      let host = "https://ducks-service.onrender.com";
+      let host = "http://localhost:8080";
           async function addTheDuck() {
               let message = "";
-                let duckId = document.getElementById("id").value;
+                let duckName = document.getElementById("name").value;
                 let duckType = document.getElementById("type").value;
 
                 //alert("You entered: id=" + duckId + " ,type=" + duckType);
                 //let duck = {x: duckId, y: duckType};
                 //alert("You entered: id=" + duck.x + " ,type=" + duck.y);
 
-                let duck = {id: duckId, type: duckType};
+                let duck = {name: duckName, type: duckType};
                 //alert("You entered: id=" + duck.id + " ,type=" + duck.type);
 
                 alert("You entered:" + JSON.stringify(duck));
@@ -40,7 +40,8 @@
                 };
                 let response = await fetch(host + "/ducks", request);
                 if(response.status == 200) {
-                  let result = await submitTheImage();
+                  let id = await response.json();
+                  let result = await submitTheImage(id);
                   if(result) {
                       message = "The duck was added successfully!";
                   } else {
@@ -53,8 +54,7 @@
                 alert(message);
           }
 
-          async function submitTheImage() {
-                let duckId = document.getElementById("id").value;
+          async function submitTheImage(duckId) {               
                 let imageInput = document.getElementById("imageInput");            
                 let formData = new FormData();
                 formData.append("file", imageInput.files[0]);

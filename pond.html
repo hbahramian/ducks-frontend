@@ -54,7 +54,7 @@
     
 
     <script>
-       let host = "https://ducks-service.onrender.com";
+       let host = "http://localhost:8080";
       let ducks = [];
       displayTheDucks();
 
@@ -86,7 +86,7 @@
                 />
               </div>
               <div class="flip-card-back">
-                <h1>${duck.id}</h1>
+                <h1>${duck.name}</h1>
                 <p>${duck.type}</p>
                </div>
             </div>
